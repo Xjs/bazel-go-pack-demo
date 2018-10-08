@@ -1,0 +1,33 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "main.go",
+    ],
+    importpath = "main",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@org_gonum_v1_gonum//mat:go_default_library",
+        "@org_gonum_v1_gonum//stat:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "main",
+    embed = [":go_default_library"],
+    goarch = "amd64",
+    goos = "linux",
+    pure = "on",
+    visibility = ["//visibility:public"],
+)
+
+go_binary(
+    name = "win64",
+    embed = [":go_default_library"],
+    goarch = "amd64",
+    goos = "windows",
+    pure = "on",
+    visibility = ["//visibility:public"],
+)
+
